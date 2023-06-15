@@ -1,0 +1,18 @@
+version: '3.9'
+
+services:
+  db:
+    image: postgres:14.7-alpine
+    container_name: todolist_pg_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: todolist
+      POSTGRES_PASSWORD: todolist
+      POSTGRES_DB: todolist
+    restart: always
+    ports:
+    - "5433:5432"
+
+volumes:
+  postgres_data:

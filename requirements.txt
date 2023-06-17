@@ -31,3 +31,5 @@ social-auth-app-django==5.2.0
 soupsieve==2.4.1
 sqlparse==0.4.4
 SQLAlchemy==1.4.31
+pre-commit==3.3.3
+isort==5.12.0

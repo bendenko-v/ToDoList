@@ -27,10 +27,22 @@ class CustomUserAdmin(UserAdmin):
     readonly_fields = ('last_login', 'date_joined')
 
     fieldsets = (
-        (None, {
-            'fields': ('username', 'first_name', 'last_name', 'email', 'is_staff', 'is_active', 'date_joined',
-                       'last_login',)
-        }),
+        (
+            None,
+            {
+                'fields': (
+                    'username',
+                    'password',
+                    'first_name',
+                    'last_name',
+                    'email',
+                    'is_staff',
+                    'is_active',
+                    'date_joined',
+                    'last_login',
+                )
+            },
+        ),
     )
 
 

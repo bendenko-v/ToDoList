@@ -1,0 +1,48 @@
+<mat-form-field class="field" [class.-error]="(isError$ | async)" appearance="outline">
+  <mat-label>{{ label || placeholder }}</mat-label>
+  <ng-container [ngSwitch]="type">
+    <input
+      *ngSwitchCase="'input'"
+      matInput
+      [disabled]="disabled"
+      [placeholder]="placeholder"
+      [formControl]="control"
+    >
+    <textarea
+      *ngSwitchCase="'textarea'"
+      matInput
+      [disabled]="disabled"
+      [placeholder]="placeholder"
+      [formControl]="control"
+      (keydown.control.Enter)="submit.next()"
+    ></textarea>
+
+    <mat-select
+      *ngSwitchCase="'select'"
+      [formControl]="control"
+      [multiple]="multiple"
+      [disabled]="disabled"
+    >
+      <ng-container
+        *ngFor="let item of selectList"
+      >
+        <mat-option
+          *ngIf="!item.isBlocked || control.value === item.id"
+          [value]="item.id"
+          [disabled]="item.isBlocked"
+        >
+          {{ item.title }}
+        </mat-option>
+      </ng-container>
+    </mat-select>
+
+    <div *ngSwitchCase="'date'" class="date-input">
+      <input matInput [matDatepicker]="picker" [formControl]="control">
+      <mat-datepicker-toggle class="date-picker" matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </div>
+  </ng-container>
+  <mat-error *ngIf="(isError$ | async)">
+    {{ getErrorMessage() }}
+  </mat-error>
+</mat-form-field>

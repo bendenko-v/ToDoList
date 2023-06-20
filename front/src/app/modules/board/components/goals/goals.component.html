@@ -1,0 +1,102 @@
+<div class="head">
+  <div class="fields">
+    <app-form-field
+      class="field -search"
+      [control]="searchControl"
+      placeholder="Название"
+    ></app-form-field>
+
+    <app-form-field
+      class="field"
+      [control]="orderControl"
+      placeholder="Сортировка"
+      type="select"
+      [selectList]="orderList"
+    ></app-form-field>
+
+    <app-form-field
+      class="field"
+      [control]="dataSource?.searchForm.get('category__in')"
+      placeholder="Категории"
+      type="select"
+      [selectList]="categories$ | async"
+      [multiple]="true"
+    ></app-form-field>
+
+    <app-form-field
+      class="field"
+      [control]="dataSource?.searchForm.get('priority__in')"
+      placeholder="Приоритет"
+      type="select"
+      [selectList]="priorityList"
+      [multiple]="true"
+    ></app-form-field>
+
+    <app-form-field
+      class="field"
+      [control]="dataSource?.searchForm.get('status__in')"
+      placeholder="Статус"
+      type="select"
+      [selectList]="statusList"
+      [multiple]="true"
+    ></app-form-field>
+
+    <app-form-field
+      class="field -date"
+      [control]="dataSource?.searchForm.get('due_date__lte')"
+      placeholder="Дедлайн с"
+      type="date"
+    ></app-form-field>
+
+    <app-form-field
+      class="field -date"
+      [control]="dataSource?.searchForm.get('due_date__gte')"
+      placeholder="Дедлайн до"
+      type="date"
+    ></app-form-field>
+  </div>
+</div>
+
+<div class="content">
+  <mat-progress-bar
+    *ngIf="isLoading$ | async"
+    class="progress-bar"
+    mode="indeterminate"
+  ></mat-progress-bar>
+  <div class="columns" cdkDropListGroup>
+    <div *ngFor="let status of statusList" class="column">
+      <h2 class="section-title">{{ status.title }}</h2>
+
+      <div
+        class="list"
+        cdkDropList
+        [cdkDropListData]="status.id"
+        (cdkDropListDropped)="drop($event)"
+      >
+        <app-goal-card
+          *ngFor="let item of (listByStatus$ | async)[status.id]; trackBy: trackById"
+          class="card"
+          cdkDrag
+          [cdkDragData]="item"
+          [priorityMap]="priorityMap"
+          [goal]="item"
+          (editGoal)="openEditPopup(item, $event)"
+          (click)="openGoal(item)"
+        ></app-goal-card>
+      </div>
+
+      <div>
+        <button
+          #button
+          mat-button
+          class="button-add"
+          color="primary"
+          (click)="addGoal(status.id, button)"
+        >
+          <mat-icon class="add-icon">add</mat-icon>
+          Добавить цель
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

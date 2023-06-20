@@ -1,0 +1,118 @@
+.goal-card {
+  position: relative;
+  transition: 0.3s;
+  border: 1px solid #0000001f;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px 0 rgb(0 0 0 / 4%);
+  padding: 12px;
+
+  &:hover {
+    border-color: #0003;
+    box-shadow: 0 2px 8px 0 rgb(0 0 0 / 10%);
+  }
+
+  &.-is-out-date {
+    border: 1px solid #f44336;
+  }
+}
+
+.goal-title {
+  padding-top: 2px;
+  font-size: 16px;
+  line-height: 19px;
+  word-wrap: break-word;
+  word-break: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.goal-description {
+  font-size: 14px;
+  word-wrap: break-word;
+  word-break: break-all;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-top: 4px;
+
+  &:empty {
+    display: none;
+  }
+}
+
+.goal-info {
+  margin-top: 6px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  align-items: center;
+}
+
+.priority {
+  display: inline-flex;
+  align-items: center;
+
+  &.-lvl-1 {
+    color: #008000;
+  }
+
+  &.-lvl-2 {
+    color: #3f51b5;
+  }
+
+  &.-lvl-3 {
+    color: #ff4081;
+  }
+
+  &.-lvl-4 {
+    color: #f44336;
+  }
+}
+
+.priority-icon {
+  font-size: 16px;
+  line-height: 1em;
+  height: 16px;
+  width: 1em;
+}
+
+.edit-button {
+  opacity: 0;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 30px;
+  height: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.3s;
+
+  .goal-card:hover & {
+    opacity: 1;
+  }
+
+  mat-icon {
+    font-size: 16px;
+    line-height: 16px;
+    height: 18px;
+    width: 16px;
+  }
+}
+
+.due-date {
+  font-size: 12px;
+  display: inline-block;
+  border: 1px solid #0000001f;
+  padding: 2px 4px;
+  border-radius: 3px;
+
+  &.-is-out-date {
+    background: #f44336;
+    color: #fff;
+    border-color: #000;
+  }
+}

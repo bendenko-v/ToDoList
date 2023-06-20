@@ -1,0 +1,18 @@
+.field {
+  display: block;
+  width: 100%;
+  transition: 0.3s;
+  padding-bottom: 0;
+
+  &.-error {
+    padding-bottom: 25px;
+  }
+}
+
+.date-input {
+  display: flex;
+}
+
+.date-picker {
+  margin: -14px 0 -6px;
+}

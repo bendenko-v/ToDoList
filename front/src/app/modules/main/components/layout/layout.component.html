@@ -1,0 +1,15 @@
+<app-header
+  class="header"
+  [isOpenedPanel]="isOpenedPanel"
+  (togglePanel)="isOpenedPanel = !isOpenedPanel"
+></app-header>
+<div class="main-container">
+  <app-menu class="menu"></app-menu>
+  <div class="content">
+    <router-outlet></router-outlet>
+  </div>
+  <app-right-side-panel
+    class="side-panel"
+    [class.-opened]="isOpenedPanel"
+  ></app-right-side-panel>
+</div>

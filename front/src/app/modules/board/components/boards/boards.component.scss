@@ -1,0 +1,42 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 36px 50px 20px 50px;
+  box-sizing: border-box;
+}
+
+.content {
+  flex: 1;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  max-width: 1200px;
+  position: relative;
+}
+
+.progress-bar {
+  position: absolute;
+  top: 0;
+}
+
+.field {
+  font-size: 12px;
+  margin-bottom: -18px;
+}
+
+.table {
+  width: 100%;
+}
+
+.mat-column-open, .mat-column-edit {
+  width: 170px;
+}
+
+.mat-column-delete {
+  width: 100px;
+}
+
+.paginator {
+  margin-top: auto;
+}

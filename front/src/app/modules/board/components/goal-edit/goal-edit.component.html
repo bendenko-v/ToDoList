@@ -1,0 +1,45 @@
+<form class="form" [formGroup]="form" (submit)="save()">
+  <app-form-field
+    placeholder="Название"
+    [control]="form.get('title')"
+  ></app-form-field>
+
+  <app-form-field
+    placeholder="Описание"
+    [control]="form.get('description')"
+    type="textarea"
+  ></app-form-field>
+
+  <app-form-field
+    placeholder="Дата дедлайна"
+    [control]="form.get('due_date')"
+    type="date"
+  ></app-form-field>
+
+  <app-form-field
+    placeholder="Статус"
+    [control]="form.get('status')"
+    type="select"
+    [selectList]="statusList"
+  ></app-form-field>
+
+  <app-form-field
+    placeholder="Приоритет"
+    [control]="form.get('priority')"
+    type="select"
+    [selectList]="priorityList"
+  ></app-form-field>
+
+  <app-form-field
+    placeholder="Категория"
+    [control]="form.get('category')"
+    type="select"
+    [selectList]="categories$ | async"
+  ></app-form-field>
+
+  <div *ngIf="isLoading$ | async" class="spinner-absolute">
+    <mat-spinner></mat-spinner>
+  </div>
+
+  <button mat-raised-button color="primary">Сохранить</button>
+</form>

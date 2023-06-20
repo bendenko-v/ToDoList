@@ -1,0 +1,119 @@
+<div class="root">
+  <ng-container *ngIf="(goal$ | async) as goal; else loader">
+    <div class="subtitle">
+      <span>{{ goal.category.title }} / {{ goal.status.title }}</span>
+
+      <span class="controls">
+        <span class="priority -lvl-{{ goal.priority.id }}">
+          <mat-icon class="priority-icon">signal_cellular_alt</mat-icon>
+            {{ goal.priority.title }}
+        </span>
+
+        <button class="more-button" mat-icon-button [matMenuTriggerFor]="menu" tabindex="-1">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="onDelete()">
+            <mat-icon>restore_from_trash</mat-icon>
+            Удалить
+          </button>
+          <button mat-menu-item (click)="onEdit()">
+            <mat-icon>edit</mat-icon>
+            Редактировать
+          </button>
+        </mat-menu>
+      </span>
+
+    </div>
+    <div class="title">
+      {{ goal.title }}
+    </div>
+    <div class="description" [class.-placeholder]="!goal.description">
+      {{ goal.description || 'Описание' }}
+    </div>
+
+    <div class="container">
+      <div class="content">
+        <div class="info">
+          <div class="field">
+            <span class="name">Дедлайн</span>
+            <span class="value">{{ goal.due_date ? (goal.due_date | date : 'dd.MM.YYYY' ) : '-' }}</span>
+          </div>
+          <div class="field">
+            <span class="name">Создана</span>
+            <span class="value">{{ goal.created | date : 'dd.MM.YYYY HH:mm' }}</span>
+          </div>
+          <div class="field">
+            <span class="name">Обновлена</span>
+            <span class="value">{{ goal.updated | date : 'dd.MM.YYYY HH:mm' }}</span>
+          </div>
+          <div class="field">
+            <span class="name">Статус</span>
+            <span class="value">{{ goal.status.title }}</span>
+          </div>
+          <div class="field">
+            <span class="name">Приоритет</span>
+            <span class="value">{{ goal.priority.title }}</span>
+          </div>
+          <div class="field">
+            <span class="name">Категория</span>
+            <span class="value">{{ goal.category.title }}</span>
+          </div>
+        </div>
+
+        <div class="separator">
+          Комментарии
+        </div>
+
+        <div class="comments-container">
+          <mat-progress-bar
+            *ngIf="isLoadingComment$ | async"
+            class="progress-bar"
+            mode="indeterminate"
+          ></mat-progress-bar>
+
+          <div class="list">
+            <app-comment
+              *ngFor="let item of (commentList$ | async)"
+              class="comment"
+              [comment]="item"
+              [editAvailable]="(user$ | async)?.id === item.user.id"
+              (delete)="onCommentDelete(item)"
+            ></app-comment>
+          </div>
+
+          <app-paginator
+            *ngIf="(commentList$ | async)?.length"
+            class="paginator"
+            [dataSource]="dataSource"
+            [limitList]="[2, 5, 10, 20]"
+            [orderFields]="commentOrderFields"
+          ></app-paginator>
+        </div>
+
+        <form class="comment-form" (submit)="addComment()">
+          <app-form-field
+            placeholder="Комментарий, можно отправить нажав ctrl + enter"
+            label="Комментарий"
+            type="textarea"
+            [control]="commentControl"
+            (submit)="addComment()"
+          ></app-form-field>
+          <button
+            mat-raised-button
+            color="primary"
+            class="add-button"
+          >
+            Добавить
+          </button>
+        </form>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #loader>
+    <div class="spinner-absolute">
+      <mat-spinner></mat-spinner>
+    </div>
+  </ng-template>
+</div>

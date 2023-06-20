@@ -26,7 +26,7 @@ load_dotenv()
 
 SECRET_KEY = os.getenv('SECRET_KEY')
 
-DEBUG = os.getenv('DEBUG', False)
+DEBUG = bool(os.getenv('DEBUG', 0))
 
 ALLOWED_HOSTS = ['*']
 
@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'todolist.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': os.getenv('DB_ENGINE', 'django.db.backends.postgresql_psycopg2'),
         'HOST': os.getenv('DB_HOST'),
         'PORT': os.getenv('DB_PORT'),
         'NAME': os.getenv('DB_NAME'),

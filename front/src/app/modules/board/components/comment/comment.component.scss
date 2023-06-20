@@ -1,0 +1,87 @@
+.root {
+  display: flex;
+  position: relative;
+}
+
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #3f51b5;
+  color: #fff;
+  min-width: 36px;
+}
+
+.content {
+  margin-left: 8px;
+  flex: 1;
+}
+
+.update-button {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+
+.progress-bar {
+  position: absolute;
+}
+
+.head {
+  display: flex;
+  align-items: center;
+}
+
+.user-name {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.date {
+  font-size: 12px;
+  margin-left: 12px;
+}
+
+.controls {
+  position: absolute;
+  right: 0;
+  top: 0;
+  display: none;
+
+  .root:hover & {
+    display: flex;
+  }
+}
+
+.control-btn {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  width: 34px;
+  height: 34px;
+
+  ::ng-deep {
+    .mat-button-wrapper {
+      line-height: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      width: 100%;
+    }
+  }
+
+  mat-icon {
+    font-size: 18px;
+    height: 18px;
+    width: 18px;
+    margin-top: -3px;
+  }
+
+  & + & {
+    margin-left: 4px;
+  }
+}

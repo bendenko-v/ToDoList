@@ -1,0 +1,7 @@
+<div class="container">
+  <div *ngIf="user$ | async as user" class="user-profile">
+    <button mat-mini-fab [color]="isOpenedPanel ? 'primary' : 'basic'" class="user" (click)="onTogglePanel()">
+      {{ getInitials(user) }}
+    </button>
+  </div>
+</div>

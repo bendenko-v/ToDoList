@@ -1,0 +1,59 @@
+:host {
+  background: #fafafa;
+  border-right: 1px solid #0000001f;
+}
+
+.root {
+  padding: 32px 0 16px 32px;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.link {
+  color: #333;
+  display: block;
+  text-decoration: none;
+  border-radius: 3px;
+
+  &.-active {
+    background: #3f51b526;
+    color: #3f51b5;
+  }
+}
+
+.custom-title {
+  display: flex;
+  align-items: center;
+
+  &::ng-deep {
+    i {
+      font-family: 'Material Icons';
+      font-weight: normal;
+      font-style: normal;
+      font-size: 20px;
+      line-height: 1;
+      letter-spacing: normal;
+      text-transform: none;
+      display: inline-block;
+      white-space: nowrap;
+      word-wrap: normal;
+      direction: ltr;
+      -webkit-font-feature-settings: 'liga';
+      -webkit-font-smoothing: antialiased;
+      margin-top: -5px;
+
+      &:before {
+        content: 'subdirectory_arrow_right';
+      }
+    }
+  }
+}
+
+.separator {
+  margin: 10px 0;
+  border-top: 1px solid #ccc;
+}

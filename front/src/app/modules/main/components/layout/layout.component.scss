@@ -1,0 +1,45 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.header {
+  height: 44px;
+  padding-right: 42px;
+  padding-left: 42px;
+  box-shadow: 0 3px 5px -1px #0003, 0 6px 10px #00000024, 0 1px 18px #0000001f;
+  position: relative;
+  z-index: 2;
+}
+
+.main-container {
+  flex: 1;
+  display: flex;
+  max-height: calc(100vh - 40px);
+}
+
+.content {
+  flex: 1;
+  background: #fafafa;
+}
+
+.side-panel {
+  overflow: hidden;
+  width: 0;
+  transition: 0.3s;
+  padding-left: 0;
+  padding-right: 0;
+
+  &.-opened {
+    width: 280px;
+    padding-left: 16px;
+    padding-right: 26px;
+  }
+}
+
+.menu {
+  padding-right: 16px;
+  width: 280px;
+  box-sizing: border-box;
+}

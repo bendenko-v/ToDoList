@@ -1,0 +1,45 @@
+<form [formGroup]="formProfile" (submit)="updateProfile()">
+  <app-form-field
+    class="field"
+    [placeholder]="'Логин'"
+    [control]="formProfile.get('username')"
+  ></app-form-field>
+
+  <app-form-field
+    class="field"
+    [placeholder]="'Имя'"
+    [control]="formProfile.get('first_name')"
+  ></app-form-field>
+
+  <app-form-field
+    class="field"
+    [placeholder]="'Фамилия'"
+    [control]="formProfile.get('last_name')"
+  ></app-form-field>
+
+  <app-form-field
+    class="field"
+    [placeholder]="'Email'"
+    [control]="formProfile.get('email')"
+  ></app-form-field>
+
+  <button mat-raised-button color="primary" type="submit">Обновить профиль</button>
+</form>
+
+<div class="divider"></div>
+
+<form [formGroup]="formPassword" (submit)="updatePassword()">
+  <app-form-field
+    class="field"
+    [placeholder]="'Старый пароль'"
+    [control]="formPassword.get('old_password')"
+  ></app-form-field>
+
+  <app-form-field
+    class="field"
+    [placeholder]="'Новый пароль'"
+    [control]="formPassword.get('new_password')"
+  ></app-form-field>
+
+  <button class="update-password-button" mat-raised-button color="primary" type="submit">Изменить пароль</button>
+</form>

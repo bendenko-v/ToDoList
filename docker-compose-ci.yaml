@@ -1,0 +1,61 @@
+version: '3.9'
+
+services:
+
+  front:
+    image: smopuim85/todolist:front-1.0.0
+    ports:
+      - "80:80"
+    depends_on:
+      - api
+
+  api:
+    image: smopuim85/todolist:api-1
+    environment:
+      SECRET_KEY: ${SECRET_KEY}
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      migrations:
+        condition: service_completed_successfully
+    ports:
+      - "8000:8000"
+
+  migrations:
+    image: smopuim85/todolist:migrations-1
+    environment:
+      SECRET_KEY: ${SECRET_KEY}
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: sh -c "sleep 10 && python3 manage.py migrate"
+
+  postgres:
+    image: smopuim85/todolist:postgres-1
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    healthcheck:
+      test: pg_isready -U ${DB_USER} -d ${DB_NAME}
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    restart: always
+    ports:
+      - "5432:5432"
+
+volumes:
+  postgres_data:

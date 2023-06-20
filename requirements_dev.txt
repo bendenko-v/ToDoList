@@ -11,12 +11,17 @@ djangorestframework-simplejwt==5.2.2
 djoser==2.2.0
 drf-spectacular==0.26.2
 Jinja2==3.1.2
+factory-boy==3.2.1
+Faker==18.10.0
 greenlet==2.0.2
 marshmallow==3.19.0
 packaging==23.1
 phonenumbers==8.13.13
 Pillow==9.5.0
 psycopg2-binary==2.9.6
+pytest==7.3.1
+pytest-django==4.5.2
+pytest-factoryboy==2.5.1
 PyJWT==2.7.0
 python-dateutil==2.8.2
 python-dotenv==1.0.0
@@ -26,3 +31,5 @@ social-auth-app-django==5.2.0
 soupsieve==2.4.1
 sqlparse==0.4.4
 SQLAlchemy==1.4.31
+pre-commit==3.3.3
+isort==5.12.0

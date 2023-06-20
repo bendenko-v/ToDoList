@@ -1,0 +1,60 @@
+<div class="root">
+  <div class="avatar">
+    {{ initials }}
+  </div>
+  <div class="content">
+    <div class="head">
+      <div class="user-name">{{ comment.user.first_name || comment.user.username }}</div>
+      <div
+        class="date"
+        [matTooltip]="'Дата редактирования: ' + (comment.updated | date : 'dd.MM.YYYY HH:mm')"
+        [matTooltipDisabled]="!isUpdated"
+      >
+        {{ comment.created | date : 'dd.MM.YYYY HH:mm' }}
+        <span *ngIf="isUpdated">*</span>
+      </div>
+    </div>
+    <mat-progress-bar
+      *ngIf="isLoading$ | async"
+      class="progress-bar"
+      mode="indeterminate"
+    ></mat-progress-bar>
+    <div *ngIf="!isEditMode" class="text">{{ comment.text }}</div>
+    <ng-container *ngIf="isEditMode">
+      <app-form-field
+        *ngIf="isEditMode"
+        type="textarea"
+        [control]="form.get('text')"
+        (submit)="updateComment()"
+      ></app-form-field>
+      <button
+        mat-raised-button
+        color="primary"
+        class="update-button"
+        (click)="updateComment()"
+      >
+        Сохранить
+      </button>
+    </ng-container>
+  </div>
+  <div *ngIf="editAvailable" class="controls">
+    <button
+      class="control-btn"
+      mat-icon-button
+      tabindex="-1"
+      matTooltip="Удалить"
+      (click)="delete.emit()"
+    >
+      <mat-icon>restore_from_trash</mat-icon>
+    </button>
+    <button
+      class="control-btn"
+      mat-icon-button
+      tabindex="-1"
+      matTooltip="Редактировать"
+      (click)="isEditMode = !isEditMode"
+    >
+      <mat-icon>edit</mat-icon>
+    </button>
+  </div>
+</div>

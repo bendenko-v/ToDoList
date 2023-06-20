@@ -1,0 +1,51 @@
+:host {
+  background: #fff;
+  border-left: 1px solid #0000001f;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  box-sizing: border-box;
+}
+
+.user-block {
+  display: flex;
+  align-items: center;
+}
+
+.user {
+  background: #3f51b5;
+  color: #fff;
+  height: 42px;
+  width: 42px;
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+}
+
+.info {
+  margin-left: 12px;
+}
+
+.name {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.email {
+  color: #0000008f;
+  font-size: 12px;
+}
+
+.logout {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.divider {
+  border-top: 1px solid #0000001f;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}

@@ -1,0 +1,54 @@
+<div class="root">
+  <div *ngIf="orderFields" class="order">
+    <mat-form-field class="select-field -order">
+      <mat-select
+        placeholder="Сортировка"
+        [ngModel]="dataSource?.orderField$ | async"
+        (ngModelChange)="dataSource?.setOrderField($event)"
+      >
+        <mat-option *ngFor="let item of orderFields" [value]="item.id">
+          {{ item.title }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="paginator">
+    <div class="page-size-label">Элементов на страницу:</div>
+    <mat-form-field class="page-size select-field">
+      <mat-select [ngModel]="dataSource?.limit$ | async" (ngModelChange)="setLimit($event)">
+        <mat-option *ngFor="let item of limitList" [value]="item">
+          {{ item }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div *ngIf="dataSource?.page$ | async as page" class="page-status">
+      <div class="page-status-label">Страница:</div>
+      <span>{{ page }}</span>
+
+      <span *ngIf="dataSource?.totalPages$ | async as totalPages" class="total-page">
+        из {{ totalPages }}
+      </span>
+    </div>
+
+    <div class="page-navigation">
+      <button
+        class="button-action"
+        mat-icon-button
+        [class.-active]="dataSource?.hasPrev$ | async"
+        (click)="prevPage()"
+      >
+        <mat-icon>navigate_before</mat-icon>
+      </button>
+      <button
+        class="button-action"
+        mat-icon-button
+        [class.-active]="dataSource?.hasNext$ | async"
+        (click)="nextPage()"
+      >
+        <mat-icon>navigate_next</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,26 @@
+<mat-card
+  class="goal-card"
+  [class.-is-out-date]="isOutDate"
+>
+  <div class="goal-title">#{{ goal.id }} {{ goal.title }}</div>
+  <div class="goal-description">{{ goal.description }}</div>
+  <div class="goal-info">
+    <div class="priority -lvl-{{ goal.priority }}">
+      <mat-icon class="priority-icon">signal_cellular_alt</mat-icon>
+      {{ priorityMap[goal.priority] }}
+    </div>
+    <div *ngIf="goal.due_date" class="due-date" [class.-is-out-date]="isOutDate">
+      {{ goal.due_date | date : 'dd.MM.YYYY' }}
+    </div>
+  </div>
+
+  <button
+    #button
+    class="edit-button"
+    mat-mini-fab
+    color="primary"
+    (click)="onEditGoal(button, $event)"
+  >
+    <mat-icon>edit</mat-icon>
+  </button>
+</mat-card>

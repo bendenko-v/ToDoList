@@ -1,0 +1,17 @@
+<form class="root" [formGroup]="form" (submit)="save()">
+  <app-form-field
+    placeholder="Название"
+    [control]="form.get('title')"
+  ></app-form-field>
+
+  <app-participants
+    *ngIf="board?.id"
+    formControlName="participants"
+  ></app-participants>
+
+  <div *ngIf="isLoading$ | async" class="spinner-absolute">
+    <mat-spinner></mat-spinner>
+  </div>
+
+  <button class="save-button" mat-raised-button color="primary">Сохранить</button>
+</form>

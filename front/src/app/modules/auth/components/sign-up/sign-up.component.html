@@ -1,0 +1,47 @@
+<form class="login" [formGroup]="form" (submit)="onSend()">
+  <app-form-field
+    class="field"
+    [placeholder]="'Логин'"
+    [control]="form.get('username')"
+  ></app-form-field>
+
+  <app-form-field
+    class="field"
+    [placeholder]="'Имя'"
+    [control]="form.get('first_name')"
+  ></app-form-field>
+
+  <app-form-field
+    class="field"
+    [placeholder]="'Фамилия'"
+    [control]="form.get('last_name')"
+  ></app-form-field>
+
+  <app-form-field
+    class="field"
+    [placeholder]="'Email'"
+    [control]="form.get('email')"
+  ></app-form-field>
+
+  <div class="divider"></div>
+
+  <app-form-field
+    class="field"
+    [placeholder]="'Пароль'"
+    [control]="form.get('password')"
+  ></app-form-field>
+
+  <app-form-field
+    class="field"
+    [placeholder]="'Повторите пароль'"
+    [control]="form.get('password_repeat')"
+  ></app-form-field>
+
+  <div class="divider"></div>
+
+  <button mat-raised-button color="primary" type="submit">Регистрация</button>
+
+  <div *ngIf="isLoading$ | async" class="spinner-absolute">
+    <mat-spinner></mat-spinner>
+  </div>
+</form>

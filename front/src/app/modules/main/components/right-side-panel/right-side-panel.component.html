@@ -1,0 +1,20 @@
+<div>
+  <div *ngIf="user$ | async as user" class="user-block">
+    <div class="user">
+      {{ getInitials(user) }}
+    </div>
+
+    <div class="info">
+      <div class="name">{{ user.first_name }} {{ user.last_name }}</div>
+      <div *ngIf="user.email" class="email">{{ user.email }}</div>
+    </div>
+
+    <button mat-mini-fab class="logout" (click)="logout()">
+      <mat-icon>exit_to_app</mat-icon>
+    </button>
+  </div>
+
+  <div class="divider"></div>
+
+  <app-profile></app-profile>
+</div>

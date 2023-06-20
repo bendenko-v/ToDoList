@@ -1,0 +1,33 @@
+.title {
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.list {
+  margin-top: 16px;
+}
+
+.participant {
+  font-size: 12px;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.remove-button {
+  margin: -10px 0 25px 15px;
+}
+
+.field {
+  margin-top: -12px;
+  display: block;
+
+  &.-name {
+    flex: 1;
+  }
+
+  &.-role {
+    width: 110px;
+    margin-left: 10px;
+  }
+}

@@ -1,0 +1,32 @@
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  background-color: #fafafa;
+  height: 100%;
+}
+
+.form {
+  border-radius: 8px;
+  border: solid 1px #dbdbdb;
+  background: #fff;
+  padding: 10px 25px 25px;
+  margin-top: 100px;
+  margin-bottom: auto;
+  width: 370px;
+
+  &::ng-deep {
+    .mat-tab-label {
+      flex: 1;
+    }
+  }
+}
+
+.title {
+  font-weight: 400;
+}
+
+.line {
+  margin-top: 30px;
+  align-items: center;
+}

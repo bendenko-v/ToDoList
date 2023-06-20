@@ -1,0 +1,62 @@
+.root {
+  display: flex;
+  font-size: 12px;
+}
+
+.order {
+  display: flex;
+  align-items: center;
+}
+
+.select-field.-order {
+  margin-bottom: -12px;
+}
+
+.paginator {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  padding-top: 10px;
+}
+
+.page-status {
+  margin-left: 24px;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+}
+
+.page-navigation {
+  margin-left: 12px;
+}
+
+.total-page {
+  margin-left: 3px;
+}
+
+.page-size-label {
+  padding-top: 5px;
+  margin: 0 4px;
+  color: #0000008a;
+}
+
+.page-status-label {
+  color: #0000008a;
+  margin: 0 4px;
+  font-size: 12px;
+}
+
+.page-size {
+  margin: 6px 4px 0 8px;
+  width: 56px;
+}
+
+.button-action {
+  opacity: 0.5;
+  pointer-events: none;
+
+  &.-active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}

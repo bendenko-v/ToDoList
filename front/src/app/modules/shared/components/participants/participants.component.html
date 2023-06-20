@@ -1,0 +1,44 @@
+<div class="root">
+  <div class="title">Участники:</div>
+  <div class="list">
+    <div *ngFor="let item of (viewList$ | async); let index = index" class="participant">
+      <ng-container
+        *ngIf="item.role !==  Role.creator"
+      >
+        <app-form-field
+          class="field -name"
+          [control]="item.userControl"
+          placeholder="Имя пользователя"
+        ></app-form-field>
+        <app-form-field
+          class="field -role"
+          [control]="item.roleControl"
+          type="select"
+          placeholder="Роль"
+          [selectList]="roleList"
+        ></app-form-field>
+
+        <button
+          class="remove-button"
+          mat-icon-button
+          color="accent"
+          [matTooltip]="'Удалить'"
+          (click)="remove(index)"
+        >
+          <mat-icon>restore_from_trash</mat-icon>
+        </button>
+      </ng-container>
+    </div>
+  </div>
+
+  <button
+    mat-raised-button
+    color="primary"
+    class="add-button"
+    type="button"
+    (click)="add()"
+  >
+    <mat-icon>library_add</mat-icon>
+    Добавить участника
+  </button>
+</div>

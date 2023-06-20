@@ -1,0 +1,14 @@
+<div class="auth-page">
+  <mat-tab-group
+    class="form"
+    [selectedIndex]="selectedIndex"
+    (selectedTabChange)="onChangeTab($event)"
+  >
+    <mat-tab label="Авторизация" >
+      <app-login class="content"></app-login>
+    </mat-tab>
+    <mat-tab label="Регистрация">
+      <app-sign-up class="content"></app-sign-up>
+    </mat-tab>
+  </mat-tab-group>
+</div>

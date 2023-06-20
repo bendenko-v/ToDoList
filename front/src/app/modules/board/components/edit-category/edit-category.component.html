@@ -1,0 +1,16 @@
+<form class="root" [formGroup]="form" (submit)="save()">
+  <app-form-field
+    placeholder="Название"
+    [control]="form.get('title')"
+  ></app-form-field>
+
+  <app-form-field
+    placeholder="Доска"
+    [control]="form.get('board')"
+    [disabled]="category?.id"
+    type="select"
+    [selectList]="boards$ | async"
+  ></app-form-field>
+
+  <button mat-raised-button color="primary">Сохранить</button>
+</form>

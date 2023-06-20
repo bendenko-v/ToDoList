@@ -44,5 +44,5 @@ jobs:
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
             cd todolist
-            echo ${{ secrets.SSH_PASSWORD }} | docker container prune --force
-            echo ${{ secrets.SSH_PASSWORD }} | docker-compose up -d
+            docker container prune --force
+            docker-compose up -d

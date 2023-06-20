@@ -41,7 +41,7 @@ services:
     command: sh -c "sleep 10 && python3 manage.py migrate"
 
   postgres:
-    image: smopuim85/todolist:${GITHUB_REF_NAME}-${GITHUB_RUN_ID}:postgres-1
+    image: postgres:14.7-alpine
     volumes:
       - postgres_data:/var/lib/postgresql/data
     environment:

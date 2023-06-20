@@ -3,14 +3,16 @@ version: '3.9'
 services:
 
   front:
-    image: smopuim85/todolist:${GITHUB_REF_NAME}-${GITHUB_RUN_ID}:front-1
+    image: sermalenk/skypro-front:lesson-34
     ports:
       - "80:80"
     depends_on:
       - api
 
   api:
-    image: smopuim85/todolist:${GITHUB_REF_NAME}-${GITHUB_RUN_ID}:api-1
+    image: smopuim85/todolist:${GITHUB_REF_NAME}-${GITHUB_RUN_ID}
+    volumes:
+      - app_volume:/app
     environment:
       SECRET_KEY: ${SECRET_KEY}
       DB_HOST: postgres
@@ -27,7 +29,9 @@ services:
       - "8000:8000"
 
   migrations:
-    image: smopuim85/todolist:${GITHUB_REF_NAME}-${GITHUB_RUN_ID}:migrations-1
+    image: smopuim85/todolist:${GITHUB_REF_NAME}-${GITHUB_RUN_ID}
+    volumes:
+      - app_volume:/app
     environment:
       SECRET_KEY: ${SECRET_KEY}
       DB_HOST: postgres
@@ -41,7 +45,7 @@ services:
     command: sh -c "sleep 10 && python3 manage.py migrate"
 
   postgres:
-    image: postgres:14.7-alpine
+    image: postgres:14.8-alpine
     volumes:
       - postgres_data:/var/lib/postgresql/data
     environment:

@@ -13,8 +13,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    volumes:
-      - app_volume:/app
     env_file:
       - .env
     depends_on:
@@ -27,8 +25,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    volumes:
-      - app_volume:/app
     depends_on:
       - postgres
     command: sh -c "sleep 10 && python manage.py migrate"
@@ -51,5 +47,4 @@ services:
       - "5432:5432"
 
 volumes:
-  app_volume:
   postgres_data:

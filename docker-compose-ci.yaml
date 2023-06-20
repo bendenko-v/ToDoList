@@ -11,8 +11,6 @@ services:
 
   api:
     image: smopuim85/todolist:${GITHUB_REF_NAME}-${GITHUB_RUN_ID}
-    volumes:
-      - app_volume:/app
     environment:
       SECRET_KEY: ${SECRET_KEY}
       DB_HOST: postgres
@@ -30,8 +28,6 @@ services:
 
   migrations:
     image: smopuim85/todolist:${GITHUB_REF_NAME}-${GITHUB_RUN_ID}
-    volumes:
-      - app_volume:/app
     environment:
       SECRET_KEY: ${SECRET_KEY}
       DB_HOST: postgres

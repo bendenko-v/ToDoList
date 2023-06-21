@@ -49,7 +49,7 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: ${DB_NAME}
     healthcheck:
-      test: pg_isready -U ${DB_USER} -d ${DB_NAME}
+      test: pg_isready -U postgres
       interval: 5s
       timeout: 3s
       retries: 10

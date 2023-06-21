@@ -41,7 +41,7 @@ services:
     command: sh -c "sleep 10 && python3 manage.py migrate"
 
   postgres:
-    image: postgres:15.3-alpine
+    image: postgres:14.8-alpine
     volumes:
       - postgres_data:/var/lib/postgresql/data
     environment:

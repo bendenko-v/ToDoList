@@ -23,6 +23,11 @@ jobs:
       - name: Clone code
         uses: actions/checkout@v2
       - name: Render configs
+        env:
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          DB_NAME: ${{ secrets.DB_NAME }}
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
         run: |
           mkdir deploy
           envsubst < docker-compose-ci.yaml > deploy/docker-compose.yaml
@@ -38,16 +43,10 @@ jobs:
 
       - name: Deploy app
         uses: appleboy/ssh-action@master
-        env:
-          SECRET_KEY: ${{ secrets.SECRET_KEY }}
-          DB_NAME: ${{ secrets.DB_NAME }}
-          DB_USER: ${{ secrets.DB_USER }}
-          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
-
           script: |
             cd todolist
             docker container prune --force

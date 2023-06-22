@@ -103,3 +103,6 @@ dmypy.json
 # other
 help*/
 front/
+requirements_dev.txt
+.pre-commit-config.yaml
+pyproject.toml

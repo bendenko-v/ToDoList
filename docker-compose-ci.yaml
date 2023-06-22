@@ -38,7 +38,7 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
-    command: sh -c "sleep 10 && python3 manage.py migrate"
+    command: sh -c "python3 manage.py migrate"
 
   postgres:
     image: postgres:14.8-alpine

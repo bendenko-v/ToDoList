@@ -56,8 +56,8 @@ jobs:
         if: always()
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.SSH_HOST}}
-          username: ${{ secrets.SSH_USER }}
+          host: ${{ secrets.HOST}}
+          username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
             docker system prune -a -f

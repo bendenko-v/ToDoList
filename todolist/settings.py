@@ -39,8 +39,19 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'social_django',
     'core',
 ]
+
+AUTHENTICATION_BACKENDS = [
+    'social_core.backends.vk.VKOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+]
+
+SOCIAL_AUTH_VK_OAUTH2_KEY = os.getenv('VK_ID')
+SOCIAL_AUTH_VK_OAUTH2_SECRET = os.getenv('VK_KEY')
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/logged-in/'
+SOCIAL_AUTH_LOGIN_ERROR_URL = '/login-error/'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -50,6 +61,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
 ROOT_URLCONF = 'todolist.urls'

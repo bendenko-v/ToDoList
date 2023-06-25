@@ -3,7 +3,7 @@ version: '3.9'
 services:
 
   front:
-    image: sermalenk/skypro-front:lesson-34
+    image: sermalenk/skypro-front:lesson-35
     restart: on-failure
     ports:
       - "80:80"
@@ -33,6 +33,8 @@ services:
       DB_NAME: ${DB_NAME}
       DB_USER: ${DB_USER}
       DB_PASSWORD: ${DB_PASSWORD}
+      VK_ID: ${VK_ID}
+      VK_KEY: ${VK_KEY}
     depends_on:
       postgres:
         condition: service_healthy

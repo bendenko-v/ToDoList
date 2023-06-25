@@ -44,6 +44,7 @@ jobs:
         run: |
           mkdir deploy
           envsubst < docker-compose-ci.yaml > deploy/docker-compose.yaml
+          cat nginx.conf > nginx.conf
 
       - name: Copy files on server
         uses: appleboy/scp-action@master
@@ -51,7 +52,7 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
-          source: "deploy/docker-compose.yaml"
+          source: "deploy/docker-compose.yaml,deploy/nginx.conf"
           target: "todolist"
           strip_components: 1
 

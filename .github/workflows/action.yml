@@ -44,7 +44,7 @@ jobs:
         run: |
           mkdir deploy
           envsubst < docker-compose-ci.yaml > deploy/docker-compose.yaml
-          cat nginx.conf > nginx.conf
+          cat nginx.conf > deploy/nginx.conf
 
       - name: Copy files on server
         uses: appleboy/scp-action@master

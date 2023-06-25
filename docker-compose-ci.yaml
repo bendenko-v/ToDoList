@@ -4,13 +4,28 @@ services:
 
   front:
     image: sermalenk/skypro-front:lesson-34
+    restart: on-failure
     ports:
       - "80:80"
     depends_on:
-      - api
+      api:
+        condition: service_started
+      collect_static:
+        condition: service_completed_successfully
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - django_static:/usr/share/nginx/html/static/
+
+  collect_static:
+    image: ${DOCKER_USERNAME}/todolist:latest
+    environment:
+      SECRET_KEY: ${SECRET_KEY}
+    command: python3 manage.py collectstatic -c --no-input
+    volumes:
+      - django_static:/app/static/
 
   api:
-    image: smopuim85/todolist:${GITHUB_REF_NAME}-${GITHUB_RUN_ID}
+    image: ${DOCKER_USERNAME}/todolist:latest
     environment:
       SECRET_KEY: ${SECRET_KEY}
       DB_HOST: postgres
@@ -23,11 +38,9 @@ services:
         condition: service_healthy
       migrations:
         condition: service_completed_successfully
-    ports:
-      - "8000:8000"
 
   migrations:
-    image: smopuim85/todolist:${GITHUB_REF_NAME}-${GITHUB_RUN_ID}
+    image: ${DOCKER_USERNAME}/todolist:latest
     environment:
       SECRET_KEY: ${SECRET_KEY}
       DB_HOST: postgres
@@ -38,12 +51,10 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
-    command: sh -c "python3 manage.py migrate"
+    command: python3 manage.py migrate
 
   postgres:
-    image: postgres:14.8-alpine
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
+    image: postgres:14.8
     environment:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
@@ -54,8 +65,8 @@ services:
       timeout: 3s
       retries: 10
     restart: always
-    ports:
-      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
 
 volumes:
   postgres_data:

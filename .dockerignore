@@ -1,8 +1,6 @@
-.git/
-.github/
-venv/
-front/
-.env
-requirements_dev.txt
-.pre-commit-config.yaml
-pyproject.toml
+**
+
+!todolist
+!core
+!manage.py
+!requirements.txt

@@ -54,7 +54,7 @@ services:
     command: python3 manage.py migrate
 
   postgres:
-    image: postgres:14.8
+    image: postgres:14.8-alpine
     environment:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}

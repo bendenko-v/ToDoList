@@ -64,7 +64,8 @@ jobs:
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
             cd todolist
-            docker container prune --force
+            docker-compose pull
+            docker-compose down
             docker-compose up -d
 
       - name: Cleanup

@@ -23,7 +23,7 @@ class UserAuthenticateView(GenericAPIView):
 
         if user is not None:
             login(request, user)
-            return Response({'message': 'Authentication successful'}, status=status.HTTP_200_OK)
+            return Response(UserSerializer(user).data, status=status.HTTP_200_OK)
         else:
             return Response({'message': 'Invalid login credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 

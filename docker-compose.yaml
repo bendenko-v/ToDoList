@@ -3,7 +3,7 @@ version: '3.9'
 services:
 
   front:
-    image: sermalenk/skypro-front:lesson-35
+    image: sermalenk/skypro-front:lesson-36
     restart: on-failure
     ports:
       - "80:80"
@@ -19,7 +19,7 @@ services:
   collect_static:
     build: .
     env_file: .env
-    command: python3 manage.py collectstatic -c --no-input
+    command: python manage.py collectstatic -c --no-input
     volumes:
       - django_static:/app/static/
 
@@ -37,6 +37,7 @@ services:
       - "8000:8000"
     volumes:
       - ./core:/app/core/
+      - ./goals:/app/goals/
       - ./todolist:/app/todolist/
 
   migrations:
@@ -45,7 +46,7 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
-    command: python3 manage.py migrate
+    command: python manage.py migrate
 
   postgres:
     image: postgres:14.8-alpine

@@ -39,9 +39,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
     'social_django',
+    'django_filters',
     'core',
+    'goals',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+}
 
 AUTHENTICATION_BACKENDS = [
     'social_core.backends.vk.VKOAuth2',

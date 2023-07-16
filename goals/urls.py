@@ -1,6 +1,5 @@
 from django.urls import path
-
-from goals.views import boards, categories, comments, goals
+from views import boards, categories, comments, goals
 
 urlpatterns = [
     path('board/list', boards.BoardListView.as_view()),

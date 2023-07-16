@@ -60,7 +60,7 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: ${DB_NAME}
     healthcheck:
-      test: pg_isready -U postgres
+      test: pg_isready -U ${DB_USER} -d ${DB_NAME}
       interval: 5s
       timeout: 3s
       retries: 10

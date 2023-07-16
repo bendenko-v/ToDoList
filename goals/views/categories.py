@@ -1,8 +1,10 @@
 from django.db import transaction
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters, permissions
 from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.pagination import LimitOffsetPagination
 
+from goals.filters import CategoryFilter
 from goals.models import Goal, GoalCategory
 from goals.permissions import CategoryPermission
 from goals.serializers import CategoryCreateSerializer, CategorySerializer
@@ -12,13 +14,18 @@ class CategoryListView(ListAPIView):
     serializer_class = CategorySerializer
     permission_classes = [permissions.IsAuthenticated]
     pagination_class = LimitOffsetPagination
-    filter_backends = [filters.OrderingFilter, filters.SearchFilter]
+    filter_backends = [DjangoFilterBackend, filters.OrderingFilter, filters.SearchFilter]
+    filterset_class = CategoryFilter
     ordering_fields = ['title', 'created']
     ordering = ['title']
     search_fields = ['title']
 
     def get_queryset(self):
-        return GoalCategory.objects.select_related('user').filter(user=self.request.user, is_deleted=False)
+        return (
+            GoalCategory.objects.select_related('user')
+            .filter(board__participants__user=self.request.user)
+            .exclude(is_deleted=True)
+        )
 
 
 class CategoryCreateView(CreateAPIView):

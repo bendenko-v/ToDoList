@@ -4,7 +4,7 @@ from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveUpdateDe
 from rest_framework.pagination import LimitOffsetPagination
 
 from goals.filters import GoalDateFilter
-from goals.models import Goal
+from goals.models import BoardParticipant, Goal
 from goals.permissions import GoalPermission
 from goals.serializers import GoalCreateSerializer, GoalSerializer
 
@@ -21,7 +21,7 @@ class GoalListView(ListAPIView):
     def get_queryset(self):
         return (
             Goal.objects.select_related('user')
-            .filter(user=self.request.user, category__is_deleted=False)
+            .filter(category__board__participants__user=self.request.user, category__is_deleted=False)
             .exclude(status=Goal.Status.archived)
         )
 
@@ -37,7 +37,12 @@ class GoalDetailView(RetrieveUpdateDestroyAPIView):
 
     def get_queryset(self):
         return (
-            Goal.objects.select_related('user').filter(category__is_deleted=False).exclude(status=Goal.Status.archived)
+            Goal.objects.select_related('user')
+            .filter(
+                category__board__participants__user=self.request.user,
+                category__is_deleted=False,
+            )
+            .exclude(status=Goal.Status.archived)
         )
 
     def perform_destroy(self, instance: Goal):

@@ -5,8 +5,10 @@ from core.models import User
 
 
 class RegistrationSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=True, required=True, validators=[validate_password])
-    password_repeat = serializers.CharField(write_only=True, required=True)
+    password = serializers.CharField(
+        write_only=True, required=True, validators=[validate_password], style={'input_type': 'password'}
+    )
+    password_repeat = serializers.CharField(write_only=True, required=True, style={'input_type': 'password'})
     username = serializers.CharField(required=True)
 
     class Meta:
@@ -38,8 +40,10 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class ChangePasswordSerializer(serializers.ModelSerializer):
-    old_password = serializers.CharField(write_only=True, required=True)
-    new_password = serializers.CharField(write_only=True, required=True, validators=[validate_password])
+    old_password = serializers.CharField(write_only=True, required=True, style={'input_type': 'password'})
+    new_password = serializers.CharField(
+        write_only=True, required=True, validators=[validate_password], style={'input_type': 'password'}
+    )
 
     class Meta:
         model = User

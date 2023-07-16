@@ -26,20 +26,15 @@ class BoardCreateView(CreateAPIView):
 
 
 class BoardDetailView(RetrieveUpdateDestroyAPIView):
-    model = Board
     permission_classes = [permissions.IsAuthenticated, BoardPermission]
     serializer_class = BoardSerializer
 
     def get_queryset(self):
-        # Обратите внимание на фильтрацию – она идет через participants
-        return Board.objects.filter(participants__user=self.request.user, is_deleted=False)
+        return Board.objects.prefetch_related('participants__user').exclude(is_deleted=True)
 
-    def perform_destroy(self, instance: Board):
-        # При удалении доски помечаем ее как is_deleted,
-        # «удаляем» категории, обновляем статус целей
+    def perform_destroy(self, instance: Board) -> None:
         with transaction.atomic():
             instance.is_deleted = True
             instance.save()
             instance.categories.update(is_deleted=True)
             Goal.objects.filter(category__board=instance).update(status=Goal.Status.archived)
-        return instance

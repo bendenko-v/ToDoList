@@ -106,3 +106,4 @@ front/
 requirements_dev.txt
 .pre-commit-config.yaml
 pyproject.toml
+get_requests.py

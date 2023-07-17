@@ -19,6 +19,7 @@ psycopg2-binary==2.9.6
 PyJWT==2.7.0
 python-dateutil==2.8.2
 python-dotenv==1.0.0
+requests==2.31.0
 setuptools==68.0.0
 six==1.16.0
 social-auth-app-django==5.2.0

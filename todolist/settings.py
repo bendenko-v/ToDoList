@@ -28,6 +28,8 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 
 DEBUG = bool(os.getenv('DEBUG', 0))
 
+TG_TOKEN = os.getenv('TG_TOKEN')
+
 ALLOWED_HOSTS = ['*']
 
 # Application definition
@@ -44,6 +46,7 @@ INSTALLED_APPS = [
     'django_filters',
     'core',
     'goals',
+    'bot',
 ]
 
 REST_FRAMEWORK = {

@@ -5,15 +5,59 @@ from django.core.management.base import BaseCommand, CommandError
 from bot.models import TgUser
 from bot.tg.client import TgClient
 from bot.tg.dc import Message
+from goals.models import Goal
+from goals.serializers import GoalSerializer
 from todolist.settings import TG_TOKEN
 
 client = TgClient(TG_TOKEN)
 
 
+def get_user_goals(user_id: int) -> str:
+    """
+    Get user goals from the db, filter it by main fields and return it to Telegram Chat
+
+    Args:
+        user_id:
+    Returns:
+        string with goals data
+    """
+    priority = dict(Goal.Priority.choices)
+    status = dict(Goal.Status.choices)
+
+    goals = (
+        Goal.objects.select_related('user')
+        .filter(category__board__participants__user_id=user_id, category__is_deleted=False)
+        .exclude(status=Goal.Status.archived)
+        .all()
+    )
+
+    serializer = GoalSerializer(goals, many=True)
+
+    data = []
+    for item in serializer.data:
+        filtered_dict = {
+            key: value for key, value in item.items() if key in ['title', 'due_date', 'priority', 'status']
+        }
+        data.append(filtered_dict)
+
+    result = []
+    for index, item in enumerate(data, start=1):
+        goal = (
+            f"{index}) {item['title']}, "
+            f"status: {status[item['status']]}, "
+            f"priority: {priority[item['priority']]}, "
+            f"{'due_date: ' + item['due_date'][:10] if item['due_date'] else ''}"
+        )
+        result.append(goal)
+
+    goals_data = '\n'.join(result)
+    return goals_data
+
+
 class Command(BaseCommand):
     help = 'Running telegram bot'
     commands = {
-        '/goals': '...',
+        '/goals': get_user_goals,
     }
 
     def add_arguments(self, parser):
@@ -60,5 +104,8 @@ class Command(BaseCommand):
 
     def handle_command(self, message: Message, chat_id: int):
         if message.text in self.commands:
-            response = self.commands[message.text]
+            user_id = TgUser.objects.filter(tg_id=chat_id).first().user_id
+            response = self.commands[message.text](user_id)
             return client.send_message(chat_id=chat_id, text=response)
+        else:
+            return client.send_message(chat_id=chat_id, text='Command not found!')

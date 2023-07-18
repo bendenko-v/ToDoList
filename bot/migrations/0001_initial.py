@@ -18,7 +18,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('tg_id', models.IntegerField(unique=True, verbose_name='Telegram Chat Id')),
-                ('username', models.IntegerField(unique=True, verbose_name='Telegram Username')),
+                ('username', models.CharField(unique=True, verbose_name='Telegram Username')),
                 ('verification_code', models.CharField(verbose_name='Verification Code', max_length=16)),
                 (
                     'user',

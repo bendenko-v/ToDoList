@@ -12,6 +12,9 @@ client = TgClient(TG_TOKEN)
 
 class Command(BaseCommand):
     help = 'Running telegram bot'
+    commands = {
+        '/goals': '...',
+    }
 
     def add_arguments(self, parser):
         parser.add_argument('runbot', nargs='?', default='runbot')
@@ -23,7 +26,7 @@ class Command(BaseCommand):
             try:
                 while True:
                     res = client.get_updates(offset=offset)
-                    # print(f'Got message: {res.result[0].message}')
+
                     for item in res.result:
                         offset = item.update_id + 1
                         message = item.message
@@ -31,10 +34,9 @@ class Command(BaseCommand):
                         if not is_user_verified:
                             if self.verify_user(message, chat_id):
                                 is_user_verified = True
+                            continue
+                        self.handle_command(message, chat_id)
 
-                        # hanlde messages here
-                        # client.send_message(chat_id=chat_id, text=response)
-                        # print(f'Sent message: {item.message.text} to chat: {chat_id}')
             except Exception as e:
                 raise CommandError(f'An error occurred: {e}')
 
@@ -55,3 +57,8 @@ class Command(BaseCommand):
         message = f'Hello!\nIt seems you need to link your account.\n' f"Here's the verification code: {token}"
         client.send_message(chat_id=chat_id, text=message)
         return False
+
+    def handle_command(self, message: Message, chat_id: int):
+        if message.text in self.commands:
+            response = self.commands[message.text]
+            return client.send_message(chat_id=chat_id, text=response)

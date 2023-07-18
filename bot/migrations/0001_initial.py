@@ -17,10 +17,11 @@ class Migration(migrations.Migration):
             name='TgUser',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('chat_id', models.IntegerField(unique=True, verbose_name='Telegram Chat Id')),
-                ('telegram_user_id', models.IntegerField(unique=True, verbose_name='Telegram User Id')),
+                ('tg_id', models.IntegerField(unique=True, verbose_name='Telegram Chat Id')),
+                ('username', models.IntegerField(unique=True, verbose_name='Telegram Username')),
+                ('verification_code', models.CharField(verbose_name='Verification Code', max_length=16)),
                 (
-                    'user_id',
+                    'user',
                     models.ForeignKey(
                         null=True,
                         on_delete=django.db.models.deletion.PROTECT,

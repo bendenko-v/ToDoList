@@ -8,9 +8,10 @@ class TgUser(models.Model):
         verbose_name = 'Telegram User'
         verbose_name_plural = 'Telegram Users'
 
-    chat_id = models.IntegerField(verbose_name='Telegram Chat Id', unique=True)
-    telegram_user_id = models.IntegerField(verbose_name='Telegram User Id', unique=True)
-    user_id = models.ForeignKey(User, verbose_name='User', on_delete=models.PROTECT, null=True)
+    tg_id = models.IntegerField(verbose_name='Telegram Chat Id', unique=True)
+    username = models.CharField(verbose_name='Telegram Username', unique=True)
+    verification_code = models.CharField(verbose_name='Verification Code', max_length=16)
+    user = models.ForeignKey(User, verbose_name='User', on_delete=models.PROTECT, null=True)
 
     def __str__(self):
-        return f'Telegram User: {self.telegram_user_id}'
+        return f'User chat id: {self.tg_id}'

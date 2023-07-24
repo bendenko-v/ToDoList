@@ -36,10 +36,21 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - ./bot:/app/bot/
       - ./core:/app/core/
       - ./goals:/app/goals/
       - ./todolist:/app/todolist/
+
+  bot:
+    build: .
+    env_file: .env
+    depends_on:
+      postgres:
+        condition: service_healthy
+      migrations:
+        condition: service_completed_successfully
+    volumes:
+      - ./bot:/app/bot/
+    command: python manage.py runbot
 
   migrations:
     build: .

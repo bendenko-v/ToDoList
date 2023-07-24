@@ -1,60 +1,48 @@
-import requests
+import logging
+from typing import Type, TypeVar
 
-from bot.tg.dc import Chat, GetUpdatesResponse, Message, MessageFrom, SendMessageResponse, Update
+import requests
+from pydantic.error_wrappers import ValidationError
+from pydantic.main import BaseModel
+
+from bot.tg.scheme import GetUpdatesResponse, SendMessageResponse
+
+T = TypeVar('T', bound=BaseModel)
+
+logger = logging.getLogger(__name__)
 
 
 class TgClient:
-    def __init__(self, token):
-        self.token = token
+    def __init__(self, token: str):
+        self.__token = token
+        self.__url = f'https://api.telegram.org/bot{self.__token}/'
 
-    def get_url(self, method: str):
-        return f'https://api.telegram.org/bot{self.token}/{method}'
+    def __get_url(self, method: str):
+        return f'{self.__url}{method}'
 
-    def get_updates(self, offset: int = 0, timeout: int = 60) -> GetUpdatesResponse:
-        url = self.get_url('getUpdates')
-        response = requests.get(url, params={'timeout': timeout, 'offset': offset})
+    def get_updates(self, offset: int = 0, timeout: int = 10) -> GetUpdatesResponse:
+        url = self.__get_url('getUpdates')
+        response = requests.get(url, params={'timeout': timeout, 'offset': offset, 'allowed_updates': ['message']})
 
-        if response.status_code == 200:
-            data_dict = response.json()
-            updates = []
-            try:
-                if data_dict['ok']:
-                    for update in data_dict['result']:
-                        updates.append(
-                            Update(
-                                update_id=update['update_id'],
-                                message=Message(
-                                    message_id=update['message']['message_id'],
-                                    from_=MessageFrom(**update['message']['from']),
-                                    chat=Chat(**update['message']['chat']),
-                                    date=update['message']['date'],
-                                    text=update['message']['text'],
-                                ),
-                            )
-                        )
-                    return GetUpdatesResponse(ok=data_dict['ok'], result=[*updates])
-            except Exception as e:
-                print(f'Deserialization error: {e}')
+        if response.ok:
+            data = response.json()
+            return self.__deserialize_response(GetUpdatesResponse, data)
         else:
-            print('Request failed:', response.status_code)
+            logger.error(f'Bad request getUpdates, ', response.status_code)
 
-    def send_message(self, chat_id: int, text: str) -> SendMessageResponse:
-        url = self.get_url('sendMessage')
-        response = requests.get(url, params={'chat_id': chat_id, 'text': text})
+    def send_message(self, chat_id: int, text: str, timeout: int = 10) -> SendMessageResponse:
+        url = self.__get_url('sendMessage')
+        response = requests.get(url, params={'timeout': timeout, 'chat_id': chat_id, 'text': text})
 
-        if response.status_code == 200:
-            data_dict = response.json()
-            try:
-                if data_dict['ok']:
-                    message = Message(
-                        message_id=data_dict['result']['message_id'],
-                        from_=MessageFrom(**data_dict['result']['from']),
-                        chat=Chat(**data_dict['result']['chat']),
-                        date=data_dict['result']['date'],
-                        text=data_dict['result']['text'],
-                    )
-                    return SendMessageResponse(ok=data_dict['ok'], result=message)
-            except Exception as e:
-                print(f'Deserialization error: {e}')
+        if response.ok:
+            data = response.json()
+            return self.__deserialize_response(SendMessageResponse, data)
         else:
-            print('Error, message not delivered:', response.status_code)
+            logger.warning(f'Bad request sendMessage, ', response.status_code)
+
+    @staticmethod
+    def __deserialize_response(serializer_class: Type[T], data: dict) -> T:
+        try:
+            return serializer_class(**data)
+        except ValidationError:
+            logger.error(f'Failed to deserialize JSON response: {data}')

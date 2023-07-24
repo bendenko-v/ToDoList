@@ -4,7 +4,7 @@ from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveUpdateDe
 from rest_framework.pagination import LimitOffsetPagination
 
 from goals.filters import CommentFilter
-from goals.models import Board, BoardParticipant, GoalComment
+from goals.models import GoalComment
 from goals.permissions import CommentPermission
 from goals.serializers import CommentCreateSerializer, CommentSerializer
 

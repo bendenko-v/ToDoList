@@ -13,5 +13,9 @@ class TgUser(models.Model):
     verification_code = models.CharField(verbose_name='Verification Code', max_length=16)
     user = models.ForeignKey(User, verbose_name='User', on_delete=models.PROTECT, null=True)
 
+    @property
+    def is_verified(self) -> bool:
+        return bool(self.user)
+
     def __str__(self):
         return f'User chat id: {self.tg_id}'

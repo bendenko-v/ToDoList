@@ -26,13 +26,7 @@ services:
 
   api:
     image: ${DOCKER_USERNAME}/todolist:latest
-    environment:
-      SECRET_KEY: ${SECRET_KEY}
-      DB_HOST: postgres
-      DB_PORT: 5432
-      DB_NAME: ${DB_NAME}
-      DB_USER: ${DB_USER}
-      DB_PASSWORD: ${DB_PASSWORD}
+    env_file: .env
     depends_on:
       postgres:
         condition: service_healthy
@@ -41,13 +35,7 @@ services:
 
   bot:
     image: ${DOCKER_USERNAME}/todolist:latest
-    environment:
-      SECRET_KEY: ${SECRET_KEY}
-      DB_HOST: postgres
-      DB_PORT: 5432
-      DB_NAME: ${DB_NAME}
-      DB_USER: ${DB_USER}
-      DB_PASSWORD: ${DB_PASSWORD}
+    env_file: .env
     depends_on:
       postgres:
         condition: service_healthy
@@ -57,13 +45,7 @@ services:
 
   migrations:
     image: ${DOCKER_USERNAME}/todolist:latest
-    environment:
-      SECRET_KEY: ${SECRET_KEY}
-      DB_HOST: postgres
-      DB_PORT: 5432
-      DB_NAME: ${DB_NAME}
-      DB_USER: ${DB_USER}
-      DB_PASSWORD: ${DB_PASSWORD}
+    env_file: .env
     depends_on:
       postgres:
         condition: service_healthy

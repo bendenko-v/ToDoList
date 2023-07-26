@@ -72,17 +72,11 @@ class Command(BaseCommand):
                     text = 'Creation cancelled'
                 case _:
                     text = 'Unknown command'
-            self.client.send_message(chat_id=message.chat.id, text=text)
+        elif message.chat.id in self.users_data:
+            next_handler = self.users_data[message.chat.id].get('next_handler')
+            text = next_handler(
+                user_id=tg_user.user.id, chat_id=message.chat.id, message=message.text, users_data=self.users_data
+            )
         else:
-            if self.users_data.get(message.chat.id):
-                next_handler = self.users_data[message.chat.id].get('next_handler')
-                text = next_handler(
-                    user_id=tg_user.user.id, chat_id=message.chat.id, message=message.text, users_data=self.users_data
-                )
-                self.client.send_message(chat_id=message.chat.id, text=text)
-            else:
-                text = (
-                    'List of commands:\n/goals - Show your goals\n'
-                    '/create - Create a goal\n/cancel - Cancel to create'
-                )
-                self.client.send_message(chat_id=message.chat.id, text=text)
+            text = 'List of commands:\n/goals - Show your goals\n' '/create - Create a goal\n/cancel - Cancel to create'
+        self.client.send_message(chat_id=message.chat.id, text=text)

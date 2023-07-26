@@ -2,6 +2,9 @@
 
 ToDoList App is a web application built with Django REST Framework and includes a Telegram bot integration. The frontend is developed and provided by SkyPro.
 
+![Main page](https://habrastorage.org/webt/ci/-f/20/ci-f20xdrrxohhp4sawnlhmhb8q.jpeg)
+![Telegram bot](https://habrastorage.org/webt/hz/io/_e/hzio_eo2fj9qd1xh7fv7_xftjx0.jpeg)
+
 ### Requirements
 * Python v3.10
 * Docker
@@ -53,12 +56,15 @@ After setting up the application, you can access it through the provided URLs:
 
 Web Application: `http://localhost/`
 
-~~API Schema (Swagger UI): `http://localhost/api/schema/swagger-ui/`~~
+API Schema (Swagger UI): `http://localhost/api/schema/swagger-ui/`
 
-~~Please make sure to read the API documentation to understand the available endpoints and functionalities.~~
+Please make sure to read the API documentation to understand the available endpoints and functionalities.
 
-_**Note:** There are some issues with creating the Swagger documentation at the moment._
+_**Note:** There are some issues with the Swagger documentation at the moment._
 
-## Tests
+## Testing
 
-_In progress_
+To run the tests, ensure that you have pytest installed in your virtual environment. If you don't have it, you can install it using:
+`pip install pytest pytest-django`
+
+Next, navigate to the root directory of your project and execute: `pytest`

@@ -70,9 +70,7 @@ SOCIAL_AUTH_LOGIN_ERROR_URL = '/login-error/'
 SPECTACULAR_SETTINGS = {
     'TITLE': 'ToDoList API',
     'DESCRIPTION': 'REST API for ToDoList application.',
-    'SWAGGER_UI_DIST': 'https://cdn.jsdelivr.net/npm/swagger-ui-dist@latest',
     'VERSION': '1.0.0',
-    'SERVE_INCLUDE_SCHEMA': False,
 }
 
 MIDDLEWARE = [
